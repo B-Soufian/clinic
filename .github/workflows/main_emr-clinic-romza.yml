@@ -23,10 +23,10 @@ jobs:
         uses: NuGet/setup-nuget@v2
 
       - name: Restore NuGet packages
-        run: nuget restore Code/Solutions/FromzaEMR.sln
+        run: nuget restore Code/Solutions/FromzaEMR.sln -ConfigFile Code/Solutions/NuGet.Config -PackagesDirectory packages
 
       - name: Build with MSBuild
-        run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /m
+        run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /p:RestorePackages=false /m
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
@@ -54,7 +54,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+        
       - name: Login to Azure
         uses: azure/login@v2
         with:

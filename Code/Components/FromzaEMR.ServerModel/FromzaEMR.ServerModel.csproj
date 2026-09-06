@@ -34,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Audit.EntityFramework">
       <HintPath>..\..\Solutions\packages\Audit.EntityFramework.14.0.2\lib\net45\Audit.EntityFramework.dll</HintPath>

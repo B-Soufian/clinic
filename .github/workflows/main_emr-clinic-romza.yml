@@ -34,7 +34,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Publish web project
-        run: dotnet publish Code/Websites/FromzaEMR/FromzaEMR.csproj -c Release -o "${{ runner.temp }}/publish" --no-restore --no-build
+        run: msbuild Code/Websites/FromzaEMR/FromzaEMR.csproj /t:Publish /p:Configuration=Release /p:PublishDir="${{ runner.temp }}\publish"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4

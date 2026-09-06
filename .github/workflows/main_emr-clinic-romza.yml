@@ -28,7 +28,7 @@ jobs:
         uses: NuGet/setup-nuget@v2
 
       - name: Restore NuGet packages
-        run: nuget restore Code/Solutions/FromzaEMR.sln
+        run: nuget restore Code/Solutions/FromzaEMR.sln -PackagesDirectory Code/packages
 
       - name: Build with MSBuild
         run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /m
@@ -54,6 +54,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+          path: publish
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -68,4 +69,4 @@ jobs:
         with:
           app-name: 'emr-clinic-romza'
           slot-name: 'Production'
-          package: .
+          package: publish

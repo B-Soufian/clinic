@@ -16,22 +16,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-      - name: Restore NuGet packages
-        run: nuget restore Code/Solutions/FromzaEMR.sln -PackagesDirectory Code/packages
+      - name: Fix ServerModel packages.config
+        run: |
+          $xml = '<?xml version="1.0" encoding="utf-8"?><packages><package id="Audit.EntityFramework" version="14.0.2" targetFramework="net461" /><package id="Audit.NET" version="14.0.2" targetFramework="net461" /><package id="EntityFramework" version="6.2.0" targetFramework="net461" /><package id="Newtonsoft.Json" version="11.0.2" targetFramework="net461" /></packages>'
+          Set-Content -Path Code/Components/FromzaEMR.ServerModel/packages.config -Value $xml
+
+      - name: Restore NuGet packages (Mixed Solution Fix)
+        working-directory: Code/Solutions
+        run: msbuild FromzaEMR.sln -t:restore -p:RestorePackagesConfig=true
 
       - name: Build with MSBuild
-        run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /m
+        working-directory: Code/Solutions
+        run: msbuild FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /m
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
       - name: Publish web project
         run: msbuild Code/Websites/FromzaEMR/FromzaEMR.csproj /t:Publish /p:Configuration=Release /p:PublishDir="${{ runner.temp }}\publish"
@@ -54,8 +61,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-          path: publish
-
+        
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -69,4 +75,4 @@ jobs:
         with:
           app-name: 'emr-clinic-romza'
           slot-name: 'Production'
-          package: publish
+          package: .

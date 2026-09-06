@@ -9,6 +9,11 @@
   <PropertyGroup>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <RuntimeIdentifier>win7-x64</RuntimeIdentifier>

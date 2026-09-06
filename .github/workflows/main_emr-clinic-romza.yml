@@ -26,7 +26,7 @@ jobs:
         run: nuget restore Code/Solutions/FromzaEMR.sln
 
       - name: Build with MSBuild
-        run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /p:RestorePackages=false /m
+        run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /m
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4

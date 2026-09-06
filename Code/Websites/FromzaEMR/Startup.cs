@@ -136,10 +136,12 @@ namespace FromzaEMR
             //if password is present, it must be in encrypted form., only then go for decryption, else keep it as it is.
             if (!string.IsNullOrEmpty(encPassword))
             {
-                //decrypt the password and re-assign the values to actual Connstring
-                string decrypted = DecryptPassword(encPassword);//this calls our internal function of RBAC
-                connStringBuilder.Password = decrypted;
-                Configuration["Connectionstring"] = connStringBuilder.ToString();
+                try {
+                    //decrypt the password and re-assign the values to actual Connstring
+                    string decrypted = DecryptPassword(encPassword);//this calls our internal function of RBAC
+                    connStringBuilder.Password = decrypted;
+                    Configuration["Connectionstring"] = connStringBuilder.ToString();
+                } catch { } // If decryption fails, it means the password is plain-text, so leave it alone
             }
 
             //For FromzaAdmin Database connectionstring.
@@ -149,9 +151,11 @@ namespace FromzaEMR
             //if password is present, only then go for decryption, else keep it as it is.
             if (!string.IsNullOrEmpty(encPwd_Admin))
             {
-                string decPwd_Admin = DecryptPassword(encPwd_Admin);//this calls our internal function of RBAC
-                connStringBuilder2.Password = decPwd_Admin;
-                Configuration["ConnectionStringAdmin"] = connStringBuilder2.ToString();
+                try {
+                    string decPwd_Admin = DecryptPassword(encPwd_Admin);//this calls our internal function of RBAC
+                    connStringBuilder2.Password = decPwd_Admin;
+                    Configuration["ConnectionStringAdmin"] = connStringBuilder2.ToString();
+                } catch { } // If decryption fails, it means the password is plain-text, so leave it alone
             }
 
             //end: sud-9Jan'19 for pwd encryption testing

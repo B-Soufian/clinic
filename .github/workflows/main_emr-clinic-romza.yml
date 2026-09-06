@@ -27,13 +27,18 @@ jobs:
           $xml = '<?xml version="1.0" encoding="utf-8"?><packages><package id="Audit.EntityFramework" version="14.0.2" targetFramework="net461" /><package id="Audit.NET" version="14.0.2" targetFramework="net461" /><package id="EntityFramework" version="6.2.0" targetFramework="net461" /><package id="Newtonsoft.Json" version="11.0.2" targetFramework="net461" /></packages>'
           Set-Content -Path Code/Components/FromzaEMR.ServerModel/packages.config -Value $xml
 
-      - name: Restore NuGet packages (Mixed Solution Fix)
-        working-directory: Code/Solutions
-        run: msbuild FromzaEMR.sln -t:restore -p:RestorePackagesConfig=true
+      - name: Restore SDK-style projects
+        run: dotnet restore Code/Solutions/FromzaEMR.sln
+
+      - name: Brute-force Restore packages.config
+        run: |
+          Get-ChildItem -Path Code -Recurse -Filter "packages.config" | ForEach-Object {
+            Write-Host "Restoring packages from $($_.FullName)..."
+            nuget restore $_.FullName -PackagesDirectory Code/Solutions/packages
+          }
 
       - name: Build with MSBuild
-        working-directory: Code/Solutions
-        run: msbuild FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /m
+        run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /m
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4

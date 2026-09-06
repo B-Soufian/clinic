@@ -23,7 +23,7 @@ jobs:
         uses: NuGet/setup-nuget@v2
 
       - name: Restore NuGet packages
-        run: nuget restore Code/Solutions/FromzaEMR.sln -ConfigFile Code/Solutions/NuGet.Config -PackagesDirectory packages
+        run: nuget restore Code/Solutions/FromzaEMR.sln
 
       - name: Build with MSBuild
         run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /p:RestorePackages=false /m

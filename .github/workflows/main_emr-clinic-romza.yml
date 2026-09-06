@@ -27,8 +27,22 @@ jobs:
           $xml = '<?xml version="1.0" encoding="utf-8"?><packages><package id="Audit.EntityFramework" version="14.0.2" targetFramework="net461" /><package id="Audit.NET" version="14.0.2" targetFramework="net461" /><package id="EntityFramework" version="6.2.0" targetFramework="net461" /><package id="Newtonsoft.Json" version="11.0.2" targetFramework="net461" /></packages>'
           Set-Content -Path Code/Components/FromzaEMR.ServerModel/packages.config -Value $xml
 
-      - name: Restore NuGet packages
-        run: nuget restore Code/Solutions/FromzaEMR.sln
+      - name: Restore Web Project (Modern)
+        run: dotnet restore Code/Websites/FromzaEMR/FromzaEMR.csproj
+
+      - name: Clean Poisoned Obj Folders (Legacy Fix)
+        run: |
+          $objFolders = Get-ChildItem -Path Code -Directory -Filter "obj" -Recurse | Where-Object { $_.FullName -notmatch "Websites" }
+          if ($objFolders) {
+            $objFolders | Remove-Item -Recurse -Force
+          }
+
+      - name: Brute-force Restore packages.config (Legacy Fix)
+        run: |
+          Get-ChildItem -Path Code -Recurse -Filter "packages.config" | ForEach-Object {
+            Write-Host "Restoring packages from $($_.FullName)..."
+            nuget restore $_.FullName -PackagesDirectory Code/Solutions/packages
+          }
 
       - name: Build with MSBuild
         run: msbuild Code/Solutions/FromzaEMR.sln /p:Configuration=Release /p:Platform="Any CPU" /m

@@ -16,8 +16,11 @@
     <Content Include="wwwroot\**">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <!-- Exclude the massive unused assets folder to save 200MB and fix Azure disk space errors -->
+    <!-- Exclude massive unused folders & dev dependencies to keep publish artifact tiny -->
     <Content Remove="wwwroot\assets\**" />
+    <Content Remove="wwwroot\**\node_modules\**" />
+    <Content Remove="wwwroot\FromzaApp\src\**" />
+    <Content Remove="wwwroot\FromzaApp\e2e\**" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
@@ -28,7 +31,6 @@
     <OutputType>Exe</OutputType>
     <PackageId>FromzaEMR</PackageId>
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
-    <!-- <ApplicationIcon>favicon.ico</ApplicationIcon> -->
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AssemblyVersion>4.6.1.10</AssemblyVersion>
     <FileVersion>4.6.1.10</FileVersion>
@@ -285,6 +287,7 @@
   </ItemGroup>
 
 </Project>
+
 
 
 

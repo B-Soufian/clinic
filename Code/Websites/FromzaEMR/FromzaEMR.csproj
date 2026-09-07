@@ -16,6 +16,8 @@
     <Content Include="wwwroot\**">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <!-- Exclude the massive unused assets folder to save 200MB and fix Azure disk space errors -->
+    <Content Remove="wwwroot\assets\**" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
@@ -283,5 +285,6 @@
   </ItemGroup>
 
 </Project>
+
 
 

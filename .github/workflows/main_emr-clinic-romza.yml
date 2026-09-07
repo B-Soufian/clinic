@@ -45,6 +45,17 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+
+      - name: Build Angular Frontend
+        working-directory: Code/Websites/FromzaEMR/wwwroot/FromzaApp
+        run: |
+          npm install --legacy-peer-deps
+          npm run build
+
       - name: Publish web project
         run: msbuild Code/Websites/FromzaEMR/FromzaEMR.csproj /t:Publish /p:Configuration=Release /p:PublishDir="${{ runner.temp }}\publish"
 

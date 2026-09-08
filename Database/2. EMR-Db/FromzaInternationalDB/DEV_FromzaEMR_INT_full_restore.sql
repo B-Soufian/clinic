@@ -18,12 +18,13 @@ USE [master];
 GO
 
 -- Restore the EMR database from the supplied backup.
--- Update the file paths below to match your local SQL Server data folder.
+-- Replace the backup path and data/log file paths below to match the
+-- local SQL Server instance on the target machine.
 RESTORE DATABASE [DEV_FromzaEMR_INT]
-FROM DISK = N'C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Database\2. EMR-Db\FromzaInternationalDB\Dev_DanpheEMR_INT1.bak'
+FROM DISK = N'<PATH_TO_BACKUP>\Dev_DanpheEMR_INT1.bak'
 WITH
-    MOVE N'DanpheEMR_Data' TO N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\DEV_FromzaEMR_INT.mdf',
-    MOVE N'DanpheEMR_Log'  TO N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\DEV_FromzaEMR_INT.ldf',
+    MOVE N'DanpheEMR_Data' TO N'<SQL_DATA_PATH>\DEV_FromzaEMR_INT.mdf',
+    MOVE N'DanpheEMR_Log'  TO N'<SQL_DATA_PATH>\DEV_FromzaEMR_INT.ldf',
     REPLACE,
     STATS = 10;
 GO
@@ -51,7 +52,8 @@ GO
 -- If the admin database does not exist yet, create it by running the
 -- bundled script. This script contains the schema + seed data for the
 -- FromzaAdmin database used by the application.
-:r 'C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Database\1. Admin-Db\1. FromzaAdmin_CompleteDB.sql'
+-- Run the same file from the repo relative path on the target machine.
+:r 'Database\1. Admin-Db\1. FromzaAdmin_CompleteDB.sql'
 GO
 
 PRINT 'DEV_FromzaEMR_INT and FromzaAdmin are ready for the app.';

@@ -5,6 +5,10 @@
 **/.vs/
 *.bak
 *.zip
+!Database/2. EMR-Db/FromzaInternationalDB/*.bak
+!Database/2. EMR-Db/FromzaInternationalDB/*.zip
+!Database/2. EMR-Db/FromzaInternationalDB/**/*.bak
+!Database/2. EMR-Db/FromzaInternationalDB/**/*.zip
 *.log
 *.lock
 package-lock.json

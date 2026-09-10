@@ -112,7 +112,6 @@ public class CommonController : Controller
         }
         catch (Exception ex)
         {
-            System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\global_error.txt", ex.ToString());
             responseData.Status = ENUM_Fromza_HTTP_ResponseStatus.Failed;
             responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
         }
@@ -130,7 +129,6 @@ public class CommonController : Controller
         }
         catch (Exception ex)
         {
-            System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\global_error.txt", ex.ToString());
             responseData.Status = ENUM_Fromza_HTTP_ResponseStatus.Failed;
             responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
         }

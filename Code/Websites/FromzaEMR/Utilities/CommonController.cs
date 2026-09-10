@@ -112,7 +112,7 @@ public class CommonController : Controller
         }
         catch (Exception ex)
         {
-            try { var logDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); Directory.CreateDirectory(logDir); File.WriteAllText(Path.Combine(logDir, "global_error.txt"), ex.ToString()); } catch { }
+            try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "global_error.txt"), ex.ToString()); } catch { }
             responseData.Status = ENUM_Fromza_HTTP_ResponseStatus.Failed;
             responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
         }
@@ -130,7 +130,7 @@ public class CommonController : Controller
         }
         catch (Exception ex)
         {
-            try { var logDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); Directory.CreateDirectory(logDir); File.WriteAllText(Path.Combine(logDir, "global_error.txt"), ex.ToString()); } catch { }
+            try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "global_error.txt"), ex.ToString()); } catch { }
             responseData.Status = ENUM_Fromza_HTTP_ResponseStatus.Failed;
             responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
         }

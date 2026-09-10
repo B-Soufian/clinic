@@ -78,6 +78,13 @@ jobs:
         with:
           name: .net-app
         
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_304457BF675647C6B1EA98543E8433C9 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_262EADA575924FE1B89E53722DB4F498 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_AC482833ED0E46DDBC3A1FC4DCF62B2A }}
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -85,4 +92,3 @@ jobs:
           app-name: 'emr-clinic-romza'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}

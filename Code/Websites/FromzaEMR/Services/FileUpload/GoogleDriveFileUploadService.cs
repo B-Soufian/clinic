@@ -1,4 +1,4 @@
-﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
@@ -221,31 +221,46 @@ namespace FromzaEMR.Services
         }
         private void CreateLoggerFileIfNotExist()
         {
-            if (!System.IO.Directory.Exists(LoggerFileBasePath))
+            try
             {
-                System.IO.Directory.CreateDirectory(LoggerFileBasePath);
-            }
-
-            //logger
-            // Create a logger text file if does not exists
-
-            var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
-            LoggerFileFullPath = $"{LoggerFileBasePath}\\googleFileUploadLogs_{currentDate}.txt";
-
-            if (System.IO.File.Exists(LoggerFileFullPath.ToApplicationPath()) == false)
-            {
-                using (var sw = System.IO.File.Create(LoggerFileFullPath.ToApplicationPath()))
+                if (!string.IsNullOrEmpty(LoggerFileBasePath) && !System.IO.Directory.Exists(LoggerFileBasePath))
                 {
-                    sw.Close();
+                    System.IO.Directory.CreateDirectory(LoggerFileBasePath);
+                }
+
+                var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+                LoggerFileFullPath = $"{LoggerFileBasePath}\\googleFileUploadLogs_{currentDate}.txt";
+
+                var appPath = LoggerFileFullPath.ToApplicationPath();
+                if (!string.IsNullOrEmpty(appPath) && System.IO.File.Exists(appPath) == false)
+                {
+                    using (var sw = System.IO.File.Create(appPath))
+                    {
+                        sw.Close();
+                    }
                 }
             }
-
+            catch
+            {
+                // Silently ignore logger initialization errors on cloud platforms (e.g. Azure App Service)
+            }
         }
         public void Write(string text)
         {
-            using (StreamWriter sw = System.IO.File.AppendText(LoggerFileFullPath.ToApplicationPath()))
+            try
             {
-                sw.WriteLine(text);
+                var appPath = LoggerFileFullPath.ToApplicationPath();
+                if (!string.IsNullOrEmpty(appPath))
+                {
+                    using (StreamWriter sw = System.IO.File.AppendText(appPath))
+                    {
+                        sw.WriteLine(text);
+                    }
+                }
+            }
+            catch
+            {
+                // Silently ignore logging errors
             }
         }
     }

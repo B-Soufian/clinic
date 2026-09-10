@@ -1,4 +1,4 @@
-﻿import { ChangeDetectorRef, Component } from '@angular/core'
+import { ChangeDetectorRef, Component } from '@angular/core'
 import { FromzaChartsService } from '../../dashboards/shared/fromza-charts.service';
 import { DLService } from "../../shared/dl.service";
 import * as moment from 'moment/moment';
@@ -54,24 +54,22 @@ export class DashboardHomeComponent {
     this.dlService.Read("/Reporting/PatientZoneMap")
       .map(res => res)
       .subscribe(res => {
-        //console.log("---start: PatientZoneMap-----");
-        //console.log(res);
-        //console.log("---end: PatientZoneMap-----");
-
-        let dataToParse: Array<any> = JSON.parse(res.Results.JsonData);
-        let mapAreas = dataToParse.map(d => {
-          return { id: d.MapAreaCode, value: d.PatientCount };
-        });
-        this.fromzaCharts.Home_Map_PatientDistributionByZone("dvZoneWisePatientMap", mapAreas);
-
-        //this.fromzaCharts.Billing_Mix_MonthlyBilling("dvMonthlyBilling", dataToParse);
-        //"[{"MapAreaCode":"NP-BA","PatientCount":5},{"MapAreaCode":"NP-BH","PatientCount":2},{"MapAreaCode":"NP-DH","PatientCount":0},{"MapAreaCode":"NP-GA","PatientCount":2},{"MapAreaCode":"NP-JA","PatientCount":2018},{"MapAreaCode":"NP-KA","PatientCount":0},{"MapAreaCode":"NP-KO","PatientCount":802},{"MapAreaCode":"NP-LU","PatientCount":0},{"MapAreaCode":"NP-MA","PatientCount":401},{"MapAreaCode":"NP-ME","PatientCount":1},{"MapAreaCode":"NP-NA","PatientCount":2},{"MapAreaCode":"NP-RA","PatientCount":0},{"MapAreaCode":"NP-SA","PatientCount":0},{"MapAreaCode":"NP-SE","PatientCount":400}]"
-        //console.log("----LoadPatientMap----");
-        // console.log(res);
+        try {
+          if (res && res.Results && res.Results.JsonData) {
+            let dataToParse: Array<any> = JSON.parse(res.Results.JsonData);
+            if (dataToParse && dataToParse.length > 0) {
+              let mapAreas = dataToParse.map(d => {
+                return { id: d.MapAreaCode, value: d.PatientCount };
+              });
+              this.fromzaCharts.Home_Map_PatientDistributionByZone("dvZoneWisePatientMap", mapAreas);
+            }
+          }
+        } catch (e) {
+          console.warn("PatientZoneMap data unavailable, skipping map render.");
+        }
       },
         err => {
-          alert(err.ErrorMessage);
-
+          console.warn("PatientZoneMap error (non-fatal):", err);
         });
   }
 

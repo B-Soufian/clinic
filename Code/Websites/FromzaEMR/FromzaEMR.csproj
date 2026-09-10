@@ -13,6 +13,9 @@
     <Content Include="appsettings.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="setup_database.sql">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="wwwroot\**">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

@@ -127,12 +127,25 @@ BEGIN
     CREATE TABLE [dbo].[MST_Municipality] (
         MunicipalityId INT IDENTITY(1,1) PRIMARY KEY,
         MunicipalityName NVARCHAR(200) NULL,
+        CountryId INT NULL,
         CountrySubDivisionId INT NULL,
         Type NVARCHAR(100) NULL,
         IsActive BIT DEFAULT 1,
         CreatedOn DATETIME DEFAULT GETDATE(),
-        CreatedBy INT NULL
+        CreatedBy INT NULL,
+        ModifiedBy INT NULL,
+        ModifiedOn DATETIME NULL,
+        IMU_CountrySubDivisionId INT NULL,
+        IMU_MuncipalityId INT NULL
     );
+END
+ELSE
+BEGIN
+    IF COL_LENGTH('MST_Municipality', 'CountryId') IS NULL ALTER TABLE [dbo].[MST_Municipality] ADD CountryId INT NULL;
+    IF COL_LENGTH('MST_Municipality', 'ModifiedBy') IS NULL ALTER TABLE [dbo].[MST_Municipality] ADD ModifiedBy INT NULL;
+    IF COL_LENGTH('MST_Municipality', 'ModifiedOn') IS NULL ALTER TABLE [dbo].[MST_Municipality] ADD ModifiedOn DATETIME NULL;
+    IF COL_LENGTH('MST_Municipality', 'IMU_CountrySubDivisionId') IS NULL ALTER TABLE [dbo].[MST_Municipality] ADD IMU_CountrySubDivisionId INT NULL;
+    IF COL_LENGTH('MST_Municipality', 'IMU_MuncipalityId') IS NULL ALTER TABLE [dbo].[MST_Municipality] ADD IMU_MuncipalityId INT NULL;
 END
 GO
 
@@ -160,8 +173,35 @@ BEGIN
         PageHeaderText NVARCHAR(500) NULL,
         ReportDescription NVARCHAR(500) NULL,
         ModuleName NVARCHAR(200) NULL,
+        ShowHeader BIT DEFAULT 0,
+        ShowFooter BIT DEFAULT 0,
+        ShowUserName BIT DEFAULT 0,
+        ShowPrintExportDateTime BIT DEFAULT 0,
+        ShowNpDate BIT DEFAULT 0,
+        ShowEnDate BIT DEFAULT 0,
+        ShowFilterDateRange BIT DEFAULT 0,
+        ShowOtherFilterVariables BIT DEFAULT 0,
+        CreatedOn DATETIME DEFAULT GETDATE(),
+        CreatedBy INT NULL,
+        ModifiedOn DATETIME NULL,
+        ModifiedBy INT NULL,
         IsActive BIT DEFAULT 1
     );
+END
+ELSE
+BEGIN
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ShowHeader') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ShowHeader BIT DEFAULT 0;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ShowFooter') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ShowFooter BIT DEFAULT 0;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ShowUserName') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ShowUserName BIT DEFAULT 0;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ShowPrintExportDateTime') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ShowPrintExportDateTime BIT DEFAULT 0;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ShowNpDate') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ShowNpDate BIT DEFAULT 0;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ShowEnDate') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ShowEnDate BIT DEFAULT 0;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ShowFilterDateRange') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ShowFilterDateRange BIT DEFAULT 0;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ShowOtherFilterVariables') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ShowOtherFilterVariables BIT DEFAULT 0;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'CreatedOn') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD CreatedOn DATETIME DEFAULT GETDATE();
+    IF COL_LENGTH('CFG_PrintExportSettings', 'CreatedBy') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD CreatedBy INT NULL;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ModifiedOn') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ModifiedOn DATETIME NULL;
+    IF COL_LENGTH('CFG_PrintExportSettings', 'ModifiedBy') IS NULL ALTER TABLE [dbo].[CFG_PrintExportSettings] ADD ModifiedBy INT NULL;
 END
 GO
 

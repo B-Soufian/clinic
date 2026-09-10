@@ -1,3 +1,6 @@
+# Resolve repo root from script location (script is in Code\Websites\FromzaEMR)
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
+
 $tempDir = "C:\Temp\SqlDeveloperFiles"
 if (-not (Test-Path $tempDir)) {
     New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
@@ -9,7 +12,7 @@ Write-Host "1/4. Disabling Windows NTFS Compression on the target folder..." -Fo
 
 Write-Host "2/4. Moving files to C:\Temp to bypass Windows Permissions..." -ForegroundColor Cyan
 
-$origBackupPath = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Database\2. EMR-Db\FromzaInternationalDB\Dev_DanpheEMR_INT1.bak"
+$origBackupPath = Join-Path $repoRoot "Database\2. EMR-Db\FromzaInternationalDB\Dev_DanpheEMR_INT1.bak"
 $backupPath = "C:\Temp\Dev_DanpheEMR_INT1.bak"
 
 if (-not (Test-Path $backupPath)) {

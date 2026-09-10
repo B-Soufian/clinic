@@ -1,4 +1,7 @@
-$baseDir = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Database\SqlDeveloperFiles"
+# Resolve repo root from script location (script is in Code\Websites\FromzaEMR)
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
+
+$baseDir = Join-Path $repoRoot "Database\SqlDeveloperFiles"
 if (-not (Test-Path $baseDir)) {
     New-Item -ItemType Directory -Force -Path $baseDir | Out-Null
 }
@@ -7,7 +10,7 @@ $mdfPath = Join-Path $baseDir "DEV_FromzaEMR_INT.mdf"
 $ldfPath = Join-Path $baseDir "DEV_FromzaEMR_INT_log.ldf"
 $fsPath = Join-Path $baseDir "DEV_FromzaEMR_INT_PatientFiles"
 
-$backupPath = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Database\2. EMR-Db\FromzaInternationalDB\Dev_DanpheEMR_INT1.bak"
+$backupPath = Join-Path $repoRoot "Database\2. EMR-Db\FromzaInternationalDB\Dev_DanpheEMR_INT1.bak"
 $connString = "Server=localhost;Initial Catalog=master;Integrated Security=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
 
 # First, attempt to enable FILESTREAM via SQL (might require a service restart if not enabled in setup)
@@ -65,7 +68,7 @@ try {
     
     # Update appsettings.json
     Write-Host "Updating appsettings.json connection strings..." -ForegroundColor Cyan
-    $appsettingsPath = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\appsettings.json"
+    $appsettingsPath = Join-Path $PSScriptRoot "appsettings.json"
     if (Test-Path $appsettingsPath) {
         (Get-Content $appsettingsPath) -replace '\(localdb\)\\MSSQLLocalDB', 'localhost' | Set-Content $appsettingsPath
     }

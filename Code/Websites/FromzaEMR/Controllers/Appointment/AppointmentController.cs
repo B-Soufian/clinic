@@ -100,7 +100,7 @@ namespace FromzaEMR.Controllers
             }
             catch (Exception ex)
             {
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\appointment_error.txt", ex.ToString());
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "appointment_error.txt"), ex.ToString()); } catch { }
                 throw;
             }
         }

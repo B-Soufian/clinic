@@ -46,8 +46,8 @@ namespace FromzaEMR.Controllers.Patient
             }
             catch (Exception ex)
             {
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\dashboard_error.txt", ex.ToString());
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\dashboard_error.txt", ex.ToString());
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "dashboard_error.txt"), ex.ToString()); } catch { }
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "dashboard_error.txt"), ex.ToString()); } catch { }
                 responseData.Status = ENUM_FromzaHttpResponseText.Failed;
                 responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
@@ -68,7 +68,7 @@ namespace FromzaEMR.Controllers.Patient
             }
             catch (Exception ex)
             {
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\dashboard_error.txt", ex.ToString());
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "dashboard_error.txt"), ex.ToString()); } catch { }
                 responseData.Status = ENUM_FromzaHttpResponseText.Failed;
                 responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
@@ -89,7 +89,7 @@ namespace FromzaEMR.Controllers.Patient
             }
             catch (Exception ex)
             {
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\dashboard_error.txt", ex.ToString());
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "dashboard_error.txt"), ex.ToString()); } catch { }
                 responseData.Status = ENUM_FromzaHttpResponseText.Failed;
                 responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
@@ -109,7 +109,7 @@ namespace FromzaEMR.Controllers.Patient
             }
             catch (Exception ex)
             {
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\dashboard_error.txt", ex.ToString());
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "dashboard_error.txt"), ex.ToString()); } catch { }
                 responseData.Status = ENUM_FromzaHttpResponseText.Failed;
                 responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
@@ -129,7 +129,7 @@ namespace FromzaEMR.Controllers.Patient
             }
             catch (Exception ex)
             {
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\dashboard_error.txt", ex.ToString());
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "dashboard_error.txt"), ex.ToString()); } catch { }
                 responseData.Status = ENUM_FromzaHttpResponseText.Failed;
                 responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
@@ -150,7 +150,7 @@ namespace FromzaEMR.Controllers.Patient
             }
             catch (Exception ex)
             {
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\dashboard_error.txt", ex.ToString());
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "dashboard_error.txt"), ex.ToString()); } catch { }
                 responseData.Status = ENUM_FromzaHttpResponseText.Failed;
                 responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
@@ -170,7 +170,7 @@ namespace FromzaEMR.Controllers.Patient
             }
             catch (Exception ex)
             {
-                System.IO.File.WriteAllText(@"C:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\dashboard_error.txt", ex.ToString());
+                try { var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"); System.IO.Directory.CreateDirectory(logDir); System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "dashboard_error.txt"), ex.ToString()); } catch { }
                 responseData.Status = ENUM_FromzaHttpResponseText.Failed;
                 responseData.ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }

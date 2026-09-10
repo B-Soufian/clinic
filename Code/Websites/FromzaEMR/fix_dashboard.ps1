@@ -1,5 +1,8 @@
+# Resolve repo root from script location (script is in Code\Websites\FromzaEMR)
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
+
 $connString = "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=DEV_FromzaEMR_INT;Integrated Security=True;MultipleActiveResultSets=true"
-$sqlPath = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\setup_database.sql"
+$sqlPath = Join-Path $PSScriptRoot "setup_database.sql"
 
 if (-not (Test-Path $sqlPath)) {
     Write-Host "[ERR] setup_database.sql not found at $sqlPath" -ForegroundColor Red

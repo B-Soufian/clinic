@@ -1,3 +1,6 @@
+# Resolve repo root from script location (script is in Code\Websites\FromzaEMR)
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
+
 param (
     [switch]$IsElevated
 )
@@ -8,12 +11,12 @@ if (-not $IsElevated) {
     exit
 }
 
-$baseDir = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Database\SqlDeveloperFiles"
+$baseDir = Join-Path $repoRoot "Database\SqlDeveloperFiles"
 if (-not (Test-Path $baseDir)) {
     New-Item -ItemType Directory -Force -Path $baseDir | Out-Null
 }
 
-$backupDir = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Database\2. EMR-Db\FromzaInternationalDB"
+$backupDir = Join-Path $repoRoot "Database\2. EMR-Db\FromzaInternationalDB"
 $backupPath = Join-Path $backupDir "Dev_DanpheEMR_INT1.bak"
 
 Write-Host "1/3. Fixing Folder Permissions (SQL Server needs access to your Desktop)..." -ForegroundColor Cyan

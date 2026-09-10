@@ -5,7 +5,7 @@ taskkill /F /IM dotnet.exe 2>nul
 timeout /t 2 /nobreak >nul
 
 echo Running dotnet build...
-cd /d "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR"
+cd /d "%~dp0"
 dotnet build -v n > build_full.log 2>&1
 if %ERRORLEVEL% EQU 0 (
     echo.

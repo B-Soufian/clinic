@@ -12,6 +12,6 @@ if ($tcpConns) {
 Start-Sleep -Seconds 2
 
 # Clean build directory and run
-Set-Location "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR"
+Set-Location $PSScriptRoot
 Write-Host "Starting server with dotnet run..." -ForegroundColor Green
 dotnet run

@@ -32,7 +32,7 @@ Write-Host "3/5. Starting SQL Server service..." -ForegroundColor Cyan
 Start-Service "MSSQL`$SQLEXPRESS" -ErrorAction SilentlyContinue
 
 Write-Host "4/5. Updating connection strings in codebase to use .\SQLEXPRESS" -ForegroundColor Cyan
-$appsettingsPath = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Code\Websites\FromzaEMR\appsettings.json"
+$appsettingsPath = Join-Path $PSScriptRoot "appsettings.json"
 if (Test-Path $appsettingsPath) {
     (Get-Content $appsettingsPath) -replace '\(localdb\)\\MSSQLLocalDB', '.\SQLEXPRESS' | Set-Content $appsettingsPath
     Write-Host "Updated appsettings.json!"

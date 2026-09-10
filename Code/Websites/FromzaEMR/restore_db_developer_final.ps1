@@ -1,3 +1,6 @@
+# Resolve repo root from script location (script is in Code\Websites\FromzaEMR)
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
+
 Write-Host "1/3. Moving files to Public Documents to bypass Windows Permissions..." -ForegroundColor Cyan
 
 $publicDocs = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::CommonDocuments)
@@ -6,7 +9,7 @@ if (-not (Test-Path $baseDir)) {
     New-Item -ItemType Directory -Force -Path $baseDir | Out-Null
 }
 
-$origBackupPath = "c:\Users\zahra\Desktop\discord freelance\clinics\hospital-management-emr\Database\2. EMR-Db\FromzaInternationalDB\Dev_DanpheEMR_INT1.bak"
+$origBackupPath = Join-Path $repoRoot "Database\2. EMR-Db\FromzaInternationalDB\Dev_DanpheEMR_INT1.bak"
 $backupPath = Join-Path $publicDocs "Dev_DanpheEMR_INT1.bak"
 
 Write-Host "Copying backup file... (Please wait)" -ForegroundColor Yellow

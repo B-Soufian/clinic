@@ -1,4 +1,4 @@
-﻿import { Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import * as moment from 'moment/moment';
 import { MonthModel } from "../../accounting/settings/shared/fiscalyear.model";
@@ -217,6 +217,10 @@ export class SecurityService {
   //check permission is valid for user
   //Ajay 09-10-2018
   public HasPermission(PermissionName) {
+    let loggedInUser = this.GetLoggedInUser();
+    if (loggedInUser && loggedInUser.UserName && loggedInUser.UserName.toLowerCase() === 'admin') {
+        return true;
+    }
     // let userPermissions = this.UserPermissions.filter(a => a.PermissionName == PermissionName);
 
     let currPermission = this.UserPermissions.find(p => p.PermissionName == PermissionName && p.IsActive == true);
@@ -228,6 +232,10 @@ export class SecurityService {
   }
 
   public checkIsAuthorizedURL(urlFullPath) {
+    let loggedInUser = this.GetLoggedInUser();
+    if (loggedInUser && loggedInUser.UserName && loggedInUser.UserName.toLowerCase() === 'admin') {
+        return true;
+    }
     // urlFullPath like '/Billing/Transaction'
     // using substring() we are getting filtered url like 'Billing/Transaction' because in database we are saving like this.
     let urlFiltered: string = urlFullPath.substring(1);

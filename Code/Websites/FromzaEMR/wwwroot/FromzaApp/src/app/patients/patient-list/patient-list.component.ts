@@ -1,4 +1,4 @@
-﻿import { Component, Injectable, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, Injectable, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { RouterOutlet, RouterModule, Router } from '@angular/router';
 import * as moment from 'moment/moment';
 
@@ -78,9 +78,13 @@ export class PatientListComponent {
     this.Load(this.searchText);
   }
   getParamter() {
-    let parameterData = this.coreService.Parameters.find(p => p.ParameterGroupName == "Common" && p.ParameterName == "ServerSideSearchComponent").ParameterValue;
-    var data = JSON.parse(parameterData);
-    this.enableServerSideSearch = data["PatientSearchPatient"];
+    let param = this.coreService.Parameters.find(p => p.ParameterGroupName == "Common" && p.ParameterName == "ServerSideSearchComponent");
+    if (param && param.ParameterValue) {
+        var data = JSON.parse(param.ParameterValue);
+        this.enableServerSideSearch = data["PatientSearchPatient"];
+    } else {
+        this.enableServerSideSearch = false;
+    }
   }
   Load(searchTxt): void {
     this.patientBLService.GetPatientsList(searchTxt)

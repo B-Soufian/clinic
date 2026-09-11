@@ -201,7 +201,7 @@ export class SecurityService {
           currRoute.RouteId == a.ParentRouteId && a.DefaultShow != showHideRoute
       );
     } else {
-      return undefined;
+      return [];
     }
   }
   public validRouteList: Array<FromzaRoute> = new Array<FromzaRoute>();

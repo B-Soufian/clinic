@@ -10,7 +10,7 @@ import { GeneralFieldLabels } from "../DTOs/general-field-label.dto";
 
 
 export class PrintHeaderComponent {
-  public headerDetail: any;
+  public headerDetail: any = {};
 
   @Input("unit-name") unitname: string = "PHARMACY UNIT";
   @Input("show-pan-number") showPANNo : boolean = true;
@@ -37,55 +37,60 @@ export class PrintHeaderComponent {
   }
   //Get customer Header Parameter from Core Service (Database) assign to local variable
   GetHeaderParameter() {
+    let param = null;
     if(this.reportFor == "billing"){
       this.isBillingReport = true;
-      var paramValue = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader").ParameterValue;
-      if (paramValue)
-        this.headerDetail = JSON.parse(paramValue);
+      param = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader");
+      if (param && param.ParameterValue)
+        this.headerDetail = JSON.parse(param.ParameterValue);
       else
         this.msgBoxServ.showMessage("error", ["Please enter parameter values for BillingHeader"]);
     }
     else if(this.reportFor == "lab"){
       this.isLabReport = true;
-      var paramValue = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader").ParameterValue;
-      if (paramValue)
-        this.headerDetail = JSON.parse(paramValue);
+      param = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader");
+      if (param && param.ParameterValue)
+        this.headerDetail = JSON.parse(param.ParameterValue);
       else
         this.msgBoxServ.showMessage("error", ["Please enter parameter values for BillingHeader"]);
     }
     else if(this.reportFor == "adt"){
       this.isADTReport = true;
-      var paramValue = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader").ParameterValue;
-      if (paramValue)
-        this.headerDetail = JSON.parse(paramValue);
+      param = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader");
+      if (param && param.ParameterValue)
+        this.headerDetail = JSON.parse(param.ParameterValue);
       else
         this.msgBoxServ.showMessage("error", ["Please enter parameter values for BillingHeader"]);
     }
     //This is For MR Report.
     else if(this.reportFor == "MRReport"){
       this.isMRReport = true;
-      var paramValue = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader").ParameterValue;
-      if (paramValue)
-        this.headerDetail = JSON.parse(paramValue);
+      param = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader");
+      if (param && param.ParameterValue)
+        this.headerDetail = JSON.parse(param.ParameterValue);
       else
         this.msgBoxServ.showMessage("error", ["Please enter parameter values for MR-Report Header"]);
     }
 
     else if(this.reportFor == "systemadmin"){
       this.isSystemAdminReport = true;
-      var paramValue = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader").ParameterValue;
-      if (paramValue)
-        this.headerDetail = JSON.parse(paramValue);
+      param = this.coreService.Parameters.find(a => a.ParameterGroupName == "Common" && a.ParameterName == "CustomerHeader");
+      if (param && param.ParameterValue)
+        this.headerDetail = JSON.parse(param.ParameterValue);
       else
         this.msgBoxServ.showMessage("error", ["Please enter parameter values for BillingHeader"]);
     }
 
     else{
-    var paramValue = this.coreService.Parameters.find(a => a.ParameterGroupName == "Pharmacy" && a.ParameterName == "Pharmacy Receipt Header").ParameterValue;
-    if (paramValue)
-      this.headerDetail = JSON.parse(paramValue);
-    else
-      this.msgBoxServ.showMessage("error", ["Please enter parameter values for Pharmacy Receipt Header"]);
+      param = this.coreService.Parameters.find(a => a.ParameterGroupName == "Pharmacy" && a.ParameterName == "Pharmacy Receipt Header");
+      if (param && param.ParameterValue)
+        this.headerDetail = JSON.parse(param.ParameterValue);
+      else
+        this.msgBoxServ.showMessage("error", ["Please enter parameter values for Pharmacy Receipt Header"]);
+    }
+    
+    if(!this.headerDetail) {
+      this.headerDetail = {};
     }
   }
 
